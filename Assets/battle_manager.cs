@@ -199,6 +199,15 @@ public class battle_manager : MonoBehaviour {
 					enemynonber--;
 				}
 				turnnonber++;
+			} else if (PS [turnnonber].waza_tipe [wazaN] == "healing") {
+				do {
+					target = (int)Random.Range (0, 4);
+				} while(PS [target].STATE != "LIVE");
+				logtext.GetComponent<Text> ().text = PS [target].name + "に" + PS [turnnonber].name + "の" + PS [turnnonber].waza [wazaN] + "\n" + PS [target].name + "のHPを" + PS [turnnonber].waza_power [wazaN] + "回復した";
+				PS [target].HP += PS [turnnonber].waza_power [wazaN];
+				if (PS [target].HP > PS [target].MAXHP)
+					PS [target].HP = PS [target].MAXHP;
+				turnnonber++;
 			}
 		}
 	}
@@ -237,20 +246,31 @@ public class battle_manager : MonoBehaviour {
 	public void BE2()
 	{
 		if (Input.GetKeyDown (KeyCode.Return) || time > enemytime) {
-			rand = (int)Random.Range (0, 4);
-			do{
-				target = (int)Random.Range (0, 4);
-			}
-			while(PS[target].STATE!="LIVE");
-			logtext.GetComponent<Text> ().text = PS [target].name + "に" + ES [turnnonber].name + "の" + ES [turnnonber].waza [rand] + "\n" + PS [target].name + "に" + ES [turnnonber].waza_power [rand] + "ダメージ";
-			PS [target].HP -= ES [turnnonber].waza_power [rand];
-			if (PS [target].HP <= 0) {
-				PS [target].HP = 0;
-				PS [target].STATE = "DEL";
-				playernonber--;
-			}
-			turnnonber++;
 			time = 0;
+			rand=(int)Random.Range (0, 4);
+			if (ES [turnnonber].waza_tipe [rand] == "attack") {
+				do {
+					target = (int)Random.Range (0, 4);
+				} while(PS [target].STATE != "LIVE");
+				logtext.GetComponent<Text> ().text = PS [target].name + "に" + ES [turnnonber].name + "の" + ES [turnnonber].waza [rand] + "\n" + PS [target].name + "に" + ES [turnnonber].waza_power [rand] + "ダメージ";
+				PS [target].HP -= ES [turnnonber].waza_power [rand];
+				if (PS [target].HP <= 0) {
+					PS [target].HP = 0;
+					PS [target].STATE = "DEL";
+					playernonber--;
+				}
+				turnnonber++;
+
+			}else if (ES [turnnonber].waza_tipe [rand] == "healing") {
+				do {
+					target = (int)Random.Range (0, 4);
+				} while(ES [target].STATE != "LIVE");
+				logtext.GetComponent<Text> ().text = ES [target].name + "に" + ES [turnnonber].name + "の" + ES [turnnonber].waza [rand] + "\n" + ES [target].name + "のHPを" + ES [turnnonber].waza_power [rand] + "回復した";
+				ES [target].HP += ES [turnnonber].waza_power [wazaN];
+				if (ES [target].HP > ES [target].MAXHP)
+					ES [target].HP = ES [target].MAXHP;
+				turnnonber++;
+			}
 		}
 	}
 }
