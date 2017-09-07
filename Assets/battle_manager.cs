@@ -188,17 +188,18 @@ public class battle_manager : MonoBehaviour {
 	{
 		if (Input.GetKeyDown (KeyCode.Return)) {
 			time = 0;
-			do{
-				target = (int)Random.Range (0, 4);
+			if (PS [turnnonber].waza_tipe [wazaN] == "attack") {
+				do {
+					target = (int)Random.Range (0, 4);
+				} while(ES [target].STATE != "LIVE");
+				logtext.GetComponent<Text> ().text = ES [target].name + "に" + PS [turnnonber].name + "の" + PS [turnnonber].waza [wazaN] + "\n" + ES [target].name + "に" + PS [turnnonber].waza_power [wazaN] + "ダメージ";
+				ES [target].HP -= PS [turnnonber].waza_power [wazaN];
+				if (ES [target].HP <= 0) {
+					ES [target].STATE = "DEL";
+					enemynonber--;
+				}
+				turnnonber++;
 			}
-			while(ES[target].STATE!="LIVE");
-			logtext.GetComponent<Text> ().text = ES [target].name + "に" + PS [turnnonber].name + "の" + PS [turnnonber].waza [wazaN] + "\n" + ES [target].name + "に" + PS [turnnonber].waza_power [wazaN] + "ダメージ";
-			ES [target].HP -= PS [turnnonber].waza_power [wazaN];
-			if (ES [target].HP <= 0) {
-				ES [target].STATE = "DEL";
-				enemynonber--;
-			}
-			turnnonber++;
 		}
 	}
 	public void BE()
@@ -252,5 +253,4 @@ public class battle_manager : MonoBehaviour {
 			time = 0;
 		}
 	}
-
 }

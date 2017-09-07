@@ -7,8 +7,9 @@ public class status : MonoBehaviour {
 	public int MAXHP=100;//最大体力
 	public int charge;//チャージ
 
-	public string[] waza;
-	public int[] waza_power;
-	public string name;
-	public string STATE;
+	public string[] waza;//技の名前
+	public int[] waza_power;//技の効果値
+	public string[] waza_tipe;//技のタイプ
+	public string name;//キャラの名前
+	public string STATE;//キャラの状態
 }
