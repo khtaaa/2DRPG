@@ -108,18 +108,14 @@ public class battle_manager : MonoBehaviour {
 			}
 
 			if (Input.GetKeyDown (KeyCode.DownArrow)) {
-				if (wazaN > 4)
-					wazaN = 0;
-				else
+				if (!(wazaN >=3))
 					wazaN++;
 			}
 
 
 
 			if (Input.GetKeyDown (KeyCode.UpArrow)) {
-				if (wazaN < 0)
-					wazaN = 4;
-				else
+				if (!(wazaN <= 0))
 					wazaN--;
 			}
 			BP ();
