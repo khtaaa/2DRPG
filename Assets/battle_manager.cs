@@ -145,14 +145,36 @@ public class battle_manager : MonoBehaviour {
 			
 
 			if(time>3){
-				if (TURN == "enemy")
-					allturn = 1;
-				if (TURN == "player")
-					allturn = 2;
+				allturn = 4;
 				logtext.GetComponent<Text> ().text = "";
 				time = 0;
 			}
 			break;
+		case 4:
+			if (TURN == "enemy") {
+				allturn = 1;
+				for (int i = 0; i < enemy.Length; i++) {
+					if (ES [i].state2 == "poison" )
+						ES [i].HP -= 10;
+					if (ES [i].HP <= 0 && ES[i].STATE=="LIVE") {
+						ES [i].STATE = "DEL";
+						enemynonber--;
+					}
+				}
+			}
+			if (TURN == "player") {
+				allturn = 2;
+				for (int i = 0; i < player.Length; i++) {
+					if (PS [i].state2 == "poison")
+						PS [i].HP -= 10;
+					if (PS [i].HP <= 0 && PS[i].STATE=="LIVE") {
+						PS [i].STATE = "DEL";
+						playernonber--;
+					}
+				}
+			}
+			break;
+			
 		}
 			
 	}
@@ -207,6 +229,14 @@ public class battle_manager : MonoBehaviour {
 				PS [target].HP += PS [turnnonber].waza_power [wazaN];
 				if (PS [target].HP > PS [target].MAXHP)
 					PS [target].HP = PS [target].MAXHP;
+				turnnonber++;
+			} else if (PS [turnnonber].waza_tipe [wazaN] == "poison") {
+				do {
+					target = (int)Random.Range (0, 4);
+				} while(PS [target].STATE != "LIVE");
+				logtext.GetComponent<Text> ().text = ES [target].name + "に" + PS [turnnonber].name + "の" + PS [turnnonber].waza [wazaN] + "\n" + ES [target].name + "は毒になった";
+				if (ES [target].state2 == "")
+					ES [target].state2 = "poison";
 				turnnonber++;
 			}
 		}
@@ -269,6 +299,14 @@ public class battle_manager : MonoBehaviour {
 				ES [target].HP += ES [turnnonber].waza_power [wazaN];
 				if (ES [target].HP > ES [target].MAXHP)
 					ES [target].HP = ES [target].MAXHP;
+				turnnonber++;
+			} else if (ES [turnnonber].waza_tipe [rand] == "poison") {
+				do {
+					target = (int)Random.Range (0, 4);
+				} while(ES [target].STATE != "LIVE");
+				logtext.GetComponent<Text> ().text = PS [target].name + "に" + ES [turnnonber].name + "の" + ES [turnnonber].waza [rand] + "\n" + PS [target].name + "は毒になった";
+				if (PS [target].state2 == "")
+					PS [target].state2 = "poison";
 				turnnonber++;
 			}
 		}
