@@ -242,6 +242,10 @@ public class battle_manager : MonoBehaviour {
 				logtext.GetComponent<Text> ().text = PS [turnnonber].name + "の" + PS [turnnonber].waza [wazaN];
 				PS [turnnonber].charge++;
 				turnnonber++;
+			} else if (PS [turnnonber].waza_tipe [wazaN] == "defense") {
+				logtext.GetComponent<Text> ().text = PS [turnnonber].name + "の" + PS [turnnonber].waza [wazaN];
+				PS [turnnonber].defense+=10;
+				turnnonber++;
 			}
 		}
 	}
@@ -315,6 +319,10 @@ public class battle_manager : MonoBehaviour {
 			} else if (ES [turnnonber].waza_tipe [wazaN] == "charge") {
 				logtext.GetComponent<Text> ().text = ES [turnnonber].name + "の" + ES [turnnonber].waza [rand];
 				ES [turnnonber].charge++;
+				turnnonber++;
+			} else if (ES [turnnonber].waza_tipe [wazaN] == "defense") {
+				logtext.GetComponent<Text> ().text = ES [turnnonber].name + "の" + ES [turnnonber].waza [rand];
+				ES [turnnonber].defense+=10;
 				turnnonber++;
 			}
 		}
