@@ -214,8 +214,13 @@ public class battle_manager : MonoBehaviour {
 				do {
 					target = (int)Random.Range (0, 4);
 				} while(ES [target].STATE != "LIVE");
-				logtext.GetComponent<Text> ().text = ES [target].name + "に" + PS [turnnonber].name + "の" + PS [turnnonber].waza [wazaN] + "\n" + ES [target].name + "に" + ((PS [turnnonber].waza_power [wazaN]*PS[turnnonber].charge)-ES[target].defense) + "ダメージ";
-				ES [target].HP -= (PS [turnnonber].waza_power [wazaN]*PS[turnnonber].charge)-ES[target].defense;
+				if ((PS [turnnonber].waza_power [wazaN] * PS [turnnonber].charge) - ES [target].defense > 0) {
+					logtext.GetComponent<Text> ().text = PS [turnnonber].name + "の" + PS [turnnonber].waza [wazaN] + "\n" + ES [target].name + "に" + ((PS [turnnonber].waza_power [wazaN]*PS[turnnonber].charge)-ES[target].defense) + "ダメージ";
+					ES [target].HP -= (PS [turnnonber].waza_power [wazaN] * PS [turnnonber].charge) - ES [target].defense;
+				} else {
+					logtext.GetComponent<Text> ().text = PS [turnnonber].name + "の" + PS [turnnonber].waza [wazaN] + "\n" + ES [target].name + "に1ダメージ";
+					ES [target].HP--;
+				}
 				if (ES [target].HP <= 0) {
 					ES [target].STATE = "DEL";
 					enemynonber--;
@@ -225,8 +230,8 @@ public class battle_manager : MonoBehaviour {
 				do {
 					target = (int)Random.Range (0, 4);
 				} while(PS [target].STATE != "LIVE");
-				logtext.GetComponent<Text> ().text = PS [target].name + "に" + PS [turnnonber].name + "の" + PS [turnnonber].waza [wazaN] + "\n" + PS [target].name + "のHPを" + PS [turnnonber].waza_power [wazaN] + "回復した";
-				PS [target].HP += PS [turnnonber].waza_power [wazaN];
+				logtext.GetComponent<Text> ().text = PS [turnnonber].name + "の" + PS [turnnonber].waza [wazaN] + "\n" + PS [target].name + "のHPを" +  (PS [turnnonber].waza_power [wazaN]*PS[turnnonber].charge)+ "回復した";
+				PS [target].HP += (PS [turnnonber].waza_power [wazaN]*PS[turnnonber].charge);
 				if (PS [target].HP > PS [target].MAXHP)
 					PS [target].HP = PS [target].MAXHP;
 				turnnonber++;
@@ -234,7 +239,7 @@ public class battle_manager : MonoBehaviour {
 				do {
 					target = (int)Random.Range (0, 4);
 				} while(ES [target].STATE != "LIVE");
-				logtext.GetComponent<Text> ().text = ES [target].name + "に" + PS [turnnonber].name + "の" + PS [turnnonber].waza [wazaN] + "\n" + ES [target].name + "は毒になった";
+				logtext.GetComponent<Text> ().text = PS [turnnonber].name + "の" + PS [turnnonber].waza [wazaN] + "\n" + ES [target].name + "は毒になった";
 				if (ES [target].state2 == "")
 					ES [target].state2 = "poison";
 				turnnonber++;
@@ -290,8 +295,13 @@ public class battle_manager : MonoBehaviour {
 				do {
 					target = (int)Random.Range (0, 4);
 				} while(PS [target].STATE != "LIVE");
-				logtext.GetComponent<Text> ().text = PS [target].name + "に" + ES [turnnonber].name + "の" + ES [turnnonber].waza [rand] + "\n" + PS [target].name + "に" +((ES [turnnonber].waza_power [rand]*ES[turnnonber].charge)-PS[target].defense) + "ダメージ";
-				PS [target].HP -= (ES [turnnonber].waza_power [rand]*ES[turnnonber].charge)-PS[target].defense;
+				if ((ES [turnnonber].waza_power [rand] * ES [turnnonber].charge) - PS [target].defense > 0) {
+					logtext.GetComponent<Text> ().text = ES [turnnonber].name + "の" + ES [turnnonber].waza [rand] + "\n" + PS [target].name + "に" + ((ES [turnnonber].waza_power [rand] * ES [turnnonber].charge) - PS [target].defense) + "ダメージ";
+					PS [target].HP -= (ES [turnnonber].waza_power [rand] * ES [turnnonber].charge) - PS [target].defense;
+				} else {
+					logtext.GetComponent<Text> ().text = ES [turnnonber].name + "の" + ES [turnnonber].waza [rand] + "\n" + PS [target].name + "に1ダメージ";
+					PS [target].HP --;
+				}
 				if (PS [target].HP <= 0) {
 					PS [target].HP = 0;
 					PS [target].STATE = "DEL";
@@ -303,8 +313,8 @@ public class battle_manager : MonoBehaviour {
 				do {
 					target = (int)Random.Range (0, 4);
 				} while(ES [target].STATE != "LIVE");
-				logtext.GetComponent<Text> ().text = ES [target].name + "に" + ES [turnnonber].name + "の" + ES [turnnonber].waza [rand] + "\n" + ES [target].name + "のHPを" + ES [turnnonber].waza_power [rand] + "回復した";
-				ES [target].HP += ES [turnnonber].waza_power [wazaN];
+				logtext.GetComponent<Text> ().text = ES [turnnonber].name + "の" + ES [turnnonber].waza [rand] + "\n" + ES [target].name + "のHPを" + (ES [turnnonber].waza_power [wazaN]*ES[turnnonber].charge) + "回復した";
+				ES [target].HP += (ES [turnnonber].waza_power [wazaN]*ES[turnnonber].charge);
 				if (ES [target].HP > ES [target].MAXHP)
 					ES [target].HP = ES [target].MAXHP;
 				turnnonber++;
@@ -312,7 +322,7 @@ public class battle_manager : MonoBehaviour {
 				do {
 					target = (int)Random.Range (0, 4);
 				} while(PS [target].STATE != "LIVE");
-				logtext.GetComponent<Text> ().text = PS [target].name + "に" + ES [turnnonber].name + "の" + ES [turnnonber].waza [rand] + "\n" + PS [target].name + "は毒になった";
+				logtext.GetComponent<Text> ().text = ES [turnnonber].name + "の" + ES [turnnonber].waza [rand] + "\n" + PS [target].name + "は毒になった";
 				if (PS [target].state2 == "")
 					PS [target].state2 = "poison";
 				turnnonber++;
