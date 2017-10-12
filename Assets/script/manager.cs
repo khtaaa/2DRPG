@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class manager : MonoBehaviour {
 	public Text text;
@@ -52,7 +53,7 @@ public class manager : MonoBehaviour {
 			image.enabled = false;
 		
 		if (Input.GetKeyDown (KeyCode.Space))
-			Application.LoadLevel ("map");
+			SceneManager.LoadScene ("map");
 
 		if (TURN == "player") {
 			if (Input.GetKeyDown (KeyCode.DownArrow)) {

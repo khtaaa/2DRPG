@@ -59,12 +59,16 @@ public class battle_manager : MonoBehaviour {
 	void Update () {
 		time += Time.deltaTime;
 
-		if(playernonber<=0)
-			Application.LoadLevel ("gameover");
+		if (playernonber <= 0) {
+			Fade_Out.next = "gameover";
+			Fade_Out.fade_ok = true;
+		}
+		
 
-		if(enemynonber<=0)
-			Application.LoadLevel ("map");
-			
+		if (enemynonber <= 0) {
+			Fade_Out.next = "map";
+			Fade_Out.fade_ok = true;
+		}			
 
 		switch(allturn)
 		{
@@ -107,6 +111,7 @@ public class battle_manager : MonoBehaviour {
 					player [i].GetComponent<Outline> ().enabled = false;
 			}
 
+
 			if (Input.GetKeyDown (KeyCode.DownArrow)) {
 				if (!(wazaN >=3))
 					wazaN++;
@@ -132,13 +137,13 @@ public class battle_manager : MonoBehaviour {
 				logtext.GetComponent<Text> ().text = TURN + "のターン";
 				for(int i=0;i<player.Length;i++)
 				{
-					PS [i] = player[i].GetComponent<status> ();
+					//PS [i] = player[i].GetComponent<status> ();
 					player [i].GetComponent<Outline> ().enabled = false;
 				}
 
 				for(int i=0;i<enemy.Length;i++)
 				{
-					ES [i] = enemy [i].GetComponent<status> ();
+					//ES [i] = enemy [i].GetComponent<status> ();
 					enemy [i].GetComponent<Outline> ().enabled = false;
 				}
 			}
@@ -256,6 +261,7 @@ public class battle_manager : MonoBehaviour {
 	}
 	public void BE()
 	{
+		
 		if (Input.GetKeyDown (KeyCode.Return)|| time>enemytime) {
 			for(int i=0;i<enemy.Length;i++)
 			{
@@ -265,6 +271,7 @@ public class battle_manager : MonoBehaviour {
 					enemy [i].GetComponent<Outline> ().enabled = false;
 			}
 		}
+
 		if (ES [turnnonber].STATE == "LIVE") {
 			switch (turnnonber) {
 			case 0:

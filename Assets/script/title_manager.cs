@@ -13,7 +13,8 @@ public class title_manager : MonoBehaviour {
 	void Update () {
 		if(Input.GetMouseButtonDown(0))
 		{
-			Application.LoadLevel ("map");//シーン切り替え
+			Fade_Out.fade_ok = true;
+			Fade_Out.next="map";
 			map_player.now=0;
 			map_player.nonber = 0;
 		}

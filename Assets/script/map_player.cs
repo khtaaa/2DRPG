@@ -24,7 +24,8 @@ public class map_player : MonoBehaviour {
 		if (transform.position.x == point [nonber].transform.position.x && transform.position.y == point [nonber].transform.position.y && now!=nonber){
 			now = nonber;//現在のポイントをnonberに変更
 			ok = true;//移動可能
-			Application.LoadLevel ("battle");//シーン切り替え
+			Fade_Out.next="battle";
+			Fade_Out.fade_ok = true;
 		}
 			
 		//スペースを押したとき移動可能でマップの最後ではなければnonberを次の数にして移動
@@ -35,8 +36,10 @@ public class map_player : MonoBehaviour {
 			ok = false;//移動不可
 			} 
 
-			if(ok==true && nonber<point.Length)
-				Application.LoadLevel ("clear");//シーン切り替え
+			if (ok == true && nonber < point.Length) {
+				Fade_Out.next = "clear";
+				Fade_Out.fade_ok = true;
+			}
 		}
 		
 			
